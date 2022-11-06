@@ -1,74 +1,24 @@
-import React, { Component } from "react";
-import NavBar from "./components/navbar";
-import Counters from "./components/counters";
+import React, { Component, Fragment } from "react";
+import DrawerAppBar from "./components/drawer-app-bar";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import ManageServices from "./pages/manage-services";
+import UploadFiles from "./pages/upload-files";
+import MyGithub from "./pages/my-github";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    counters: [
-      { id: 1, value: 0 },
-      { id: 2, value: 0 },
-      { id: 3, value: 0 },
-      { id: 4, value: 0 },
-    ],
-  };
-  }
-
-  handleIncrement = (counter) => {
-    const counters = [...this.state.counters];
-    const index = counters.indexOf(counter);
-    counters[index] = { ...counters[index] };
-    counters[index].value++;
-    this.setState({ counters });
-  };
-
-  handleDecrement = (counter) => {
-    const counters = [...this.state.counters];
-    const index = counters.indexOf(counter);
-    counters[index] = { ...counters[index] };
-    counters[index].value--;
-    this.setState({ counters });
-  };
-
-  handleReset = () => {
-    const counters = this.state.counters.map((c) => {
-      c.value = 0;
-      return c;
-    });
-    this.setState({ counters });
-  };
-
-  handleDelete = (counterId) => {
-    const counters = this.state.counters.filter((c) => c.id !== counterId);
-    this.setState({ counters });
-  };
-
-  handleRestart = () => {
-    window.location.reload();
-  };
-
   render() {
     return (
-      <div className="main__wrap">
-        <main className="container">
-          <div className="card__box">
-            <NavBar
-              totalCounters={
-                this.state.counters.filter((c) => c.value > 0).length
-              }
-            />
-            <Counters
-              counters={this.state.counters}
-              onReset={this.handleReset}
-              onIncrement={this.handleIncrement}
-              onDecrement={this.handleDecrement}
-              onDelete={this.handleDelete}
-              onRestart={this.handleRestart}
-            />
-          </div>
-        </main>
-      </div>
+        <BrowserRouter>
+          <Fragment>
+            <DrawerAppBar />
+            <Routes>
+              <Route exact path="/manage-services" element={<ManageServices/>}/>
+              <Route exact path="/upload-files" element={<UploadFiles/>}/>
+              <Route path="/github" element={<MyGithub/>}/>
+              <Route path="/" element={<ManageServices/>}/>
+            </Routes>
+          </Fragment>
+        </BrowserRouter>
     );
   }
 }

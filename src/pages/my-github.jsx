@@ -5,7 +5,7 @@ export default function MyGithub() {
   return (
       <Paper elevation={2}>
           <div>
-            <GitHubIcon/> GitHub Repo:
+            <GitHubIcon/> GitHub Repo: https://github.com/lcihaeon/grace-liao-coding-exercise
           </div>
       </Paper>
   );
